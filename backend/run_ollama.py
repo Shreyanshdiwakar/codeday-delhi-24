@@ -1,23 +1,24 @@
 import sys
-from ollama import OllamaModel  # Importing the Ollama model
+from ollama import generate  # Importing the generate function from Ollama
 
 def summarize_text(input_text):
-    # Here you would load and run the Ollama model
-    # This is a simplified example of how you could process the text
-
-    # Assuming you have a function in Ollama to summarize text
-    model = OllamaModel('/home/harshit/.ollama/models')  # Specify the path to the locally installed Ollama model
-    result = model.generate_summary(input_text)  # Example function that generates a summary
-    return result
+    # generate fuction use karke sumaarize karne ka code
+    
+    response = generate(model="llama2-uncensored:latest", prompt=f"Summarize the following text: {input_text}")
+    
+  
+    return response['response']
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
+   
+    input_text = sys.stdin.read().strip()
+
+    if not input_text:
         print("No text input provided.")
         sys.exit(1)
     
-    # The extracted text is passed as an argument from Node.js
-    input_text = sys.argv[1]
+
     summary = summarize_text(input_text)
     
-    # Output the summary for Node.js to capture and send back to the frontend
+    
     print(summary)
